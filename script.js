@@ -164,3 +164,20 @@ window.addEventListener("resize", () => {
 resize();
 draw();
 loop();
+
+(function setActiveNav(){
+  const file = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+
+  const map = {
+    "index.html": "index",
+    "": "index",
+    "publications.html": "publications",
+    "talks.html": "talks",
+    "projects.html": "projects",
+  };
+
+  const key = map[file] || "index";
+  const a = document.querySelector(`.menu a[data-nav="${key}"]`);
+  if(a) a.classList.add("active");
+})();
+
