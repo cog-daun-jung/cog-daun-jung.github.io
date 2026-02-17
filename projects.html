@@ -30,9 +30,126 @@
   <main class="wrap">
     <section class="card" style="padding:18px;">
       <h1 style="margin:0 0 10px;">Projects</h1>
-      <p style="margin:0; color: var(--muted);">Coming soon.</p>
+    </section>
+
+    <!-- Project buttons -->
+    <section class="card" style="padding:16px;">
+      <div class="project-cards" role="tablist" aria-label="Projects">
+        <button class="proj-card active" type="button" data-target="p-winter" role="tab" aria-selected="true">
+          <div class="proj-thumb">
+            <img src="assets/winter/cover.jpg" alt="" aria-hidden="true">
+          </div>
+          <div class="proj-meta">
+            <div class="proj-title">Computational Neuroscience Winter School</div>
+            <div class="proj-sub">Team project, slides + demo video</div>
+          </div>
+        </button>
+
+        <button class="proj-card" type="button" data-target="p-ensemble" role="tab" aria-selected="false">
+          <div class="proj-thumb">
+            <img src="assets/projects/ensemble.jpg" alt="" aria-hidden="true">
+          </div>
+          <div class="proj-meta">
+            <div class="proj-title">Ensemble Perception</div>
+            <div class="proj-sub">Distribution learning, implicit vs explicit</div>
+          </div>
+        </button>
+
+        <button class="proj-card" type="button" data-target="p-face" role="tab" aria-selected="false">
+          <div class="proj-thumb">
+            <img src="assets/projects/face.jpg" alt="" aria-hidden="true">
+          </div>
+          <div class="proj-meta">
+            <div class="proj-title">Face Learning & Aging</div>
+            <div class="proj-sub">Norms, adaptation, familiarity</div>
+          </div>
+        </button>
+      </div>
+    </section>
+
+
+    <!-- Project panels -->
+    <section class="project-panels">
+      <!-- 1) Winter School project -->
+      <article class="card project-panel active" id="p-winter" role="tabpanel">
+        <div class="panel-head">
+          <h2>Computational Neuroscience Winter School - Team Project</h2>
+          <p class="muted">Slides, video clips, and a short write-up.</p>
+        </div>
+
+        <!-- Slider -->
+        <div class="slider" data-slider data-autoplay="5000">
+          <div class="slides">
+            <!-- Slide 1 image -->
+            <figure class="slide is-active">
+              <img src="assets/winter/slide1.jpg" alt="Winter school slide 1">
+              <figcaption>Overview of the problem and approach.</figcaption>
+            </figure>
+
+            <!-- Slide 2 image -->
+            <figure class="slide">
+              <img src="assets/winter/slide2.jpg" alt="Winter school slide 2">
+              <figcaption>Model architecture and training pipeline.</figcaption>
+            </figure>
+
+            <!-- Slide 3 video -->
+            <figure class="slide">
+              <video controls preload="metadata">
+                <source src="assets/projects/2026CBNS/demo_ver1.mov" type="video/mp4">
+              </video>
+              <figcaption>Demo video of the final result.</figcaption>
+            </figure>
+          </div>
+
+          <div class="slider-controls">
+            <button class="btn slider-btn" type="button" data-prev aria-label="Previous slide">Prev</button>
+            <div class="dots" data-dots aria-label="Slide indicators"></div>
+            <button class="btn slider-btn" type="button" data-next aria-label="Next slide">Next</button>
+          </div>
+        </div>
+
+        <!-- Text under slider -->
+        <div class="panel-text">
+          <h3>What we built</h3>
+          <p>
+            (여기에 겨울학교 팀프로젝트 소개 문단을 넣어줘.)
+            문제 정의, 데이터/모델/실험, 팀 역할, 결과, 배운 점 순으로 쓰면 정말 깔끔해.
+          </p>
+
+          <div class="panel-links">
+            <a class="chip" href="assets/winter/report.pdf" target="_blank" rel="noopener">Report PDF</a>
+            <a class="chip" href="assets/winter/slides.pdf" target="_blank" rel="noopener">Slides PDF</a>
+            <a class="chip" href="https://github.com/..." target="_blank" rel="noopener">Code</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2) Another project -->
+      <article class="card project-panel" id="p-ensemble" role="tabpanel" aria-hidden="true">
+        <div class="panel-head">
+          <h2>Ensemble Perception</h2>
+          <p class="muted">Distribution learning, implicit vs explicit.</p>
+        </div>
+
+        <div class="panel-text">
+          <p>여기에 프로젝트 설명을 넣고, 필요하면 이 패널에도 slider를 복붙해서 쓰면 돼.</p>
+        </div>
+      </article>
+
+      <!-- 3) Another project -->
+      <article class="card project-panel" id="p-face" role="tabpanel" aria-hidden="true">
+        <div class="panel-head">
+          <h2>Face Learning & Aging</h2>
+          <p class="muted">Norms, adaptation, familiarity.</p>
+        </div>
+
+        <div class="panel-text">
+          <p>여기도 동일하게.</p>
+        </div>
+      </article>
     </section>
   </main>
+
 
   <script src="./script.js" defer></script>
 </body>

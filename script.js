@@ -418,3 +418,168 @@ function runDecisionDemo(canvas){
     }
   }
 })();
+// Projects: card tabs (tablist)
+(function initProjectCards(){
+  const cards = document.querySelectorAll(".project-cards .proj-card");
+  const panels = document.querySelectorAll(".project-panel");
+  if(!cards.length || !panels.length) return;
+
+  function activate(targetId){
+    cards.forEach(c => {
+      const on = c.dataset.target === targetId;
+      c.classList.toggle("active", on);
+      c.setAttribute("aria-selected", on ? "true" : "false");
+    });
+
+    panels.forEach(p => {
+      const on = p.id === targetId;
+      p.classList.toggle("active", on);
+      p.setAttribute("aria-hidden", on ? "false" : "true");
+    });
+  }
+
+  cards.forEach(btn => btn.addEventListener("click", () => activate(btn.dataset.target)));
+
+  const initial = document.querySelector(".project-cards .proj-card.active")?.dataset.target || cards[0].dataset.target;
+  activate(initial);
+})();
+
+// Slider: autoplay + hover pause + swipe (supports multiple sliders)
+(function initSliders(){
+  const sliders = document.querySelectorAll("[data-slider]");
+  if(!sliders.length) return;
+
+  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  sliders.forEach(slider => {
+    const slides = Array.from(slider.querySelectorAll(".slide"));
+    const dotsWrap = slider.querySelector("[data-dots]");
+    const prevBtn = slider.querySelector("[data-prev]");
+    const nextBtn = slider.querySelector("[data-next]");
+    if(!slides.length || !dotsWrap || !prevBtn || !nextBtn) return;
+
+    let idx = 0;
+    let timer = null;
+
+    const autoplayMs = Number(slider.getAttribute("data-autoplay")) || 0;
+    const shouldAutoplay = !prefersReduced && autoplayMs >= 1500;
+
+    function pauseAllVideos(){
+      slides.forEach(s => {
+        const v = s.querySelector("video");
+        if(v && !v.paused) v.pause();
+      });
+    }
+
+    // Build dots
+    dotsWrap.innerHTML = "";
+    const dots = slides.map((_, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "dot";
+      b.setAttribute("aria-label", `Go to slide ${i+1}`);
+      b.addEventListener("click", () => go(i, true));
+      dotsWrap.appendChild(b);
+      return b;
+    });
+
+    function render(){
+      slides.forEach((s, i) => s.classList.toggle("is-active", i === idx));
+      dots.forEach((d, i) => d.classList.toggle("is-active", i === idx));
+    }
+
+    function go(i, userInitiated=false){
+      pauseAllVideos();
+      idx = (i + slides.length) % slides.length;
+      render();
+      if(userInitiated) restartAutoplay();
+    }
+
+    function next(userInitiated=false){ go(idx + 1, userInitiated); }
+    function prev(userInitiated=false){ go(idx - 1, userInitiated); }
+
+    prevBtn.addEventListener("click", () => prev(true));
+    nextBtn.addEventListener("click", () => next(true));
+
+    // Keyboard support
+    slider.tabIndex = 0;
+    slider.addEventListener("keydown", (e) => {
+      if(e.key === "ArrowLeft") prev(true);
+      if(e.key === "ArrowRight") next(true);
+    });
+
+    // Autoplay
+    function stopAutoplay(){
+      if(timer){ clearInterval(timer); timer = null; }
+    }
+    function startAutoplay(){
+      if(!shouldAutoplay || autoplayMs === 0) return;
+      stopAutoplay();
+      timer = setInterval(() => next(false), autoplayMs);
+    }
+    function restartAutoplay(){
+      stopAutoplay();
+      startAutoplay();
+    }
+
+    // Pause on hover (desktop)
+    slider.addEventListener("mouseenter", stopAutoplay);
+    slider.addEventListener("mouseleave", startAutoplay);
+
+    // Pause on touch interaction (mobile)
+    slider.addEventListener("touchstart", stopAutoplay, { passive: true });
+    slider.addEventListener("touchend", startAutoplay, { passive: true });
+
+    // Swipe support
+    let startX = 0;
+    let startY = 0;
+    let isSwiping = false;
+
+    function onTouchStart(e){
+      if(!e.touches || e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isSwiping = true;
+    }
+
+    function onTouchMove(e){
+      if(!isSwiping) return;
+      const dx = e.touches[0].clientX - startX;
+      const dy = e.touches[0].clientY - startY;
+
+      // If mostly vertical, don't treat as swipe (allow scroll)
+      if(Math.abs(dy) > Math.abs(dx) * 1.2){
+        isSwiping = false;
+        return;
+      }
+
+      // Prevent horizontal scroll jitter
+      if(Math.abs(dx) > 18) e.preventDefault();
+    }
+
+    function onTouchEnd(e){
+      if(!isSwiping) return;
+      isSwiping = false;
+
+      const endX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : startX;
+      const dx = endX - startX;
+
+      if(Math.abs(dx) > 50){
+        if(dx < 0) next(true);
+        else prev(true);
+      }
+    }
+
+    // Attach swipe handlers to the slide viewport
+    const viewport = slider.querySelector(".slides");
+    if(viewport){
+      viewport.addEventListener("touchstart", onTouchStart, { passive: true });
+      viewport.addEventListener("touchmove", onTouchMove, { passive: false });
+      viewport.addEventListener("touchend", onTouchEnd, { passive: true });
+    }
+
+    // Init
+    render();
+    startAutoplay();
+  });
+})();
