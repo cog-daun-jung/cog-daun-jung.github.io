@@ -154,17 +154,16 @@ nav a:hover{
 main{ padding-top: 26px; }
 
 .hero{
-  display:grid;
-  grid-template-columns: 1.25fr 0.75fr;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 18px;
-  align-items: stretch;
-  margin-top: 10px;
 }
+
 
 .hero-profile{
   width: 300px;
   height: 350px;
-  margin: 14px 0 16px;
+  margin: 14px 10 16px;
   border-radius: 50%;
   object-fit: cover;
 
@@ -196,7 +195,6 @@ main{ padding-top: 26px; }
     height: 95px;
   }
 }
-
 
 .card{
   background: rgba(255,255,255,0.70);
@@ -255,7 +253,7 @@ h1{
   color: var(--muted);
   font-size: 15px;
   line-height: 1.5;
-  max-width: 62ch;
+  max-width: 70ch;
 }
 
 .hero-actions{
@@ -485,4 +483,56 @@ footer{
 
 .menu a.active:hover{
   color: var(--text);
+}
+
+/* hero-right contact column */
+.contact-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.contact-item{
+  padding: 14px 14px 12px;
+}
+
+.contact-item h3{
+  margin: 0 0 6px;
+  font-size: 14.5px;
+  font-weight: 650;
+}
+
+.contact-item p{
+  margin: 0;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+@media (max-width: 900px){
+  .contact-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* mini demos inside Research Interests cards */
+.interest{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mini-demo{
+  border-radius: 14px;
+  border: 1px solid rgba(17,19,24,0.10);
+  background: rgba(255,255,255,0.65);
+  overflow: hidden;
+  height: 120px;
+}
+
+.miniCanvas{
+  width: 100%;
+  height: 100%;
+  display: block;
 }
