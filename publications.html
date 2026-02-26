@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Daun | Publications</title>
+  <title>Members | Access</title>
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
@@ -29,10 +29,113 @@
 
   <main class="wrap">
     <section class="card" style="padding:18px;">
-      <h1 style="margin:0 0 10px;">Publications</h1>
-      <p style="margin:0; color: var(--muted);">Coming soon.</p>
+      <h1 style="margin:0 0 10px;">Members Area</h1>
+      <p style="margin:0 0 14px; color: var(--muted);">
+        Enter the shared password to access internal resources.
+      </p>
+
+      <form id="gateForm" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <input
+          id="pw"
+          type="password"
+          placeholder="Shared password"
+          autocomplete="current-password"
+          style="padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.15); color:inherit; min-width:260px;"
+          required
+        />
+        <button class="btn" type="submit">Enter</button>
+        <button class="btn" type="button" id="logoutBtn" style="display:none;">Log out</button>
+      </form>
+
+      <p id="msg" style="margin:12px 0 0; color: var(--muted); font-size:.95rem;"></p>
+    </section>
+
+    <section class="card" id="contentCard" style="padding:18px; margin-top:14px; display:none;">
+      <div id="content"></div>
     </section>
   </main>
+
+  <script>
+    // ----------------------------
+    // Weak gate: shared password
+    // ----------------------------
+    // Change this periodically. Do NOT reuse personal passwords.
+    const SHARED_PASSWORD = "vcc";
+
+    const STORAGE_KEY = "members_gate_ok";
+    const form = document.getElementById("gateForm");
+    const pw = document.getElementById("pw");
+    const msg = document.getElementById("msg");
+    const contentCard = document.getElementById("contentCard");
+    const contentDiv = document.getElementById("content");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    function setAuthedUI() {
+      msg.textContent = "Access granted.";
+      contentCard.style.display = "block";
+      logoutBtn.style.display = "inline-block";
+      pw.value = "";
+      pw.blur();
+    }
+
+    function setLockedUI(text = "Access locked.") {
+      msg.textContent = text;
+      contentCard.style.display = "none";
+      logoutBtn.style.display = "none";
+      contentDiv.innerHTML = "";
+    }
+
+    async function loadMembersContent() {
+      // Internal content is fetched only after auth
+      const res = await fetch("./members-content.html", { cache: "no-store" });
+      if (!res.ok) throw new Error("Failed to load members content");
+      const html = await res.text();
+      contentDiv.innerHTML = html;
+
+      // If members-content.html includes <script> tags (like giscus),
+      // they may not execute when inserted via innerHTML.
+      // So we re-insert scripts manually:
+      const scripts = contentDiv.querySelectorAll("script");
+      scripts.forEach(old => {
+        const s = document.createElement("script");
+        for (const attr of old.attributes) s.setAttribute(attr.name, attr.value);
+        s.text = old.text || "";
+        old.replaceWith(s);
+      });
+    }
+
+    async function unlock() {
+      try {
+        setAuthedUI();
+        await loadMembersContent();
+      } catch (e) {
+        setLockedUI("Access granted, but content failed to load.");
+        console.error(e);
+      }
+    }
+
+    // Auto-unlock if already stored
+    if (localStorage.getItem(STORAGE_KEY) === "1") {
+      unlock();
+    } else {
+      setLockedUI("Please enter the shared password.");
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (pw.value === SHARED_PASSWORD) {
+        localStorage.setItem(STORAGE_KEY, "1");
+        await unlock();
+      } else {
+        setLockedUI("Wrong password.");
+      }
+    });
+
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem(STORAGE_KEY);
+      setLockedUI("Logged out.");
+    });
+  </script>
 
   <script src="./script.js" defer></script>
 </body>
