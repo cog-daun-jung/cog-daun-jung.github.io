@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Presentations | Daun Jung</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,300;0,8..144,400;0,8..144,600;0,8..144,700;1,8..144,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    body { font-family: 'Roboto Serif', Georgia, serif; color: #2c1a0e; }
+    h1, h2, h3 { color: #2c1a0e; }
+    :root { --text: #2c1a0e; --muted: #6b4c3b; }
+    .mark { display: none; }
+    .brand { display: none; }
+    .nav { justify-content: center; }
+    nav ul { justify-content: center; }
+    .menu a { color: #6b4c3b; }
+    .menu a:hover { color: #2c1a0e; background: rgba(44,26,14,0.06); }
+    .menu a.active { color: #2c1a0e; background: rgba(44,26,14,0.07); border-color: rgba(44,26,14,0.18); }
+
+    .page-title { margin: 0 0 6px; font-size: 32px; font-weight: 600; letter-spacing: -0.02em; }
+    .page-note { color: var(--muted); font-size: 13.5px; font-style: italic; margin: 0 0 24px; }
+
+    /* Filter tabs */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .filter-btn {
+      appearance: none;
+      border: 1px solid rgba(44,26,14,0.15);
+      background: rgba(255,255,255,0.55);
+      color: #6b4c3b;
+      padding: 7px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+      transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+    }
+    .filter-btn:hover { background: rgba(255,255,255,0.85); color: #2c1a0e; }
+    .filter-btn.active {
+      background: rgba(232,93,26,0.10);
+      border-color: rgba(232,93,26,0.35);
+      color: #e85d1a;
+      font-weight: 600;
+    }
+
+    /* Gallery grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .gallery-card {
+      border-radius: 16px;
+      border: 1px solid rgba(44,26,14,0.10);
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 16px rgba(44,26,14,0.07);
+      overflow: hidden;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .gallery-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(44,26,14,0.12);
+    }
+    .gallery-card[data-hidden="true"] { display: none; }
+
+    /* Thumbnail */
+    .gallery-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg,
+        rgba(232,93,26,0.12) 0%,
+        rgba(255,206,138,0.18) 50%,
+        rgba(26,79,168,0.08) 100%);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .gallery-type-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.88);
+      color: #e85d1a;
+      border: 1px solid rgba(232,93,26,0.25);
+    }
+    .gallery-type-badge.poster { color: #1a4fa8; border-color: rgba(26,79,168,0.25); }
+    .gallery-type-badge.talk   { color: #e85d1a; border-color: rgba(232,93,26,0.25); }
+
+    /* Card body */
+    .gallery-body {
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+    .gallery-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #2c1a0e;
+      line-height: 1.4;
+      margin: 0;
+    }
+    .gallery-authors {
+      font-size: 12.5px;
+      color: #6b4c3b;
+      margin: 0;
+      line-height: 1.4;
+    }
+    .gallery-authors strong { color: #2c1a0e; }
+    .gallery-venue {
+      font-size: 12.5px;
+      font-style: italic;
+      color: #6b4c3b;
+      margin: 0;
+    }
+    .gallery-date {
+      font-size: 11.5px;
+      color: #e85d1a;
+      font-weight: 600;
+      margin: 0;
+    }
+    .gallery-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .gallery-chip {
+      font-size: 12px;
+      color: #2c1a0e;
+      border: 1px solid rgba(44,26,14,0.18);
+      background: rgba(255,255,255,0.70);
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+      font-family: 'Roboto Serif', Georgia, serif;
+    }
+    .gallery-chip:hover {
+      background: rgba(232,93,26,0.10);
+      border-color: rgba(232,93,26,0.35);
+      color: #e85d1a;
+    }
+
+    /* Placeholder thumb icon */
+    .thumb-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .thumb-placeholder svg { opacity: 0.25; }
+
+    @media (max-width: 600px) {
+      .gallery { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="index.html" aria-label="Go to About">
+        <span class="mark" aria-hidden="true"></span>
+        <span class="name">Daun Jung</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="menu">
+          <li><a href="index.html" data-nav="index">About</a></li>
+          <li><a href="publications.html" data-nav="publications">Publications</a></li>
+          <li><a href="presentations.html" data-nav="presentations" class="active">Presentations</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="card" style="padding: 24px 28px 28px;">
+      <h1 class="page-title">Presentations</h1>
+      <p class="page-note">Talks and posters at conferences.</p>
+
+      <!-- Filter buttons -->
+      <div class="filter-bar" role="group" aria-label="Filter by type">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="talk">Talks</button>
+        <button class="filter-btn" data-filter="poster">Posters</button>
+      </div>
+
+      <!-- Gallery grid -->
+      <div class="gallery" id="gallery">
+
+        <!-- Card 3 -->
+        <div class="gallery-card" data-type="poster">
+          <div class="gallery-thumb">
+            <img src="assets/presentations/2026VSS.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="thumb-placeholder" style="display:none;">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2c1a0e" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            </div>
+            <span class="gallery-type-badge poster">Poster</span>
+          </div>
+          <div class="gallery-body">
+            <p class="gallery-date">May 19th, 2026</p>
+            <p class="gallery-title">Revisiting the dissociation of explicit and implicit ensemble representations.Poster presentation</p>
+            <p class="gallery-authors"><strong>Jung, D.</strong>, Park, J., & Chong, S. C.</p>
+            <p class="gallery-venue">Vision Sciences Society (VSS) 2026</p>
+            <div class="gallery-links">
+              <a class="gallery-chip" href="./assets/presentations/2026VSS_poster.png" target="_blank" rel="noopener">Poster</a>
+              <!--<a class="gallery-chip" href="#" target="_blank" rel="noopener">Abstract</a>-->
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="gallery-card" data-type="talk">
+          <div class="gallery-thumb">
+            <img src="assets/presentations/2026KSCBP.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="thumb-placeholder" style="display:none;">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2c1a0e" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            </div>
+            <span class="gallery-type-badge talk">Talk</span>
+          </div>
+          <div class="gallery-body">
+            <p class="gallery-date">January 23rd, 2026</p>
+            <p class="gallery-title">Revisiting the dissociation of explicit and implicit ensemble representations.Poster presentation</p>
+            <p class="gallery-authors"><strong>Jung, D.</strong>, Park, J., & Chong, S. C.</p>
+            <p class="gallery-venue">Korean Society for Cognitive and Biological Psychology 2026 Annual Meeting</p>
+            <div class="gallery-links">
+              <a class="gallery-chip" href="./assets/presentations/2026VSS_poster.png" target="_blank" rel="noopener">PPT</a>
+              <!--<a class="gallery-chip" href="#" target="_blank" rel="noopener">Abstract</a>-->
+            </div>
+          </div>
+        </div>
+
+         <!-- Card 1 -->
+        <div class="gallery-card" data-type="poster">
+          <div class="gallery-thumb">
+            <img src="assets/presentations/2024KSCBP.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="thumb-placeholder" style="display:none;">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2c1a0e" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+            </div>
+            <span class="gallery-type-badge poster">Poster</span>
+          </div>
+          <div class="gallery-body">
+            <p class="gallery-date">Feburary 3rd, 2024</p>
+            <p class="gallery-title">The effect of temporal frequency on image quality in a task-irrelevant window</p>
+            <p class="gallery-authors"><strong>Jung, D.</strong>, Kim, Y., Kim, C., Kim, H., Park, J. H., Yeo, Y., Cho, J., Choi, J., & Chong, S. C.</p>
+            <p class="gallery-venue">Korean Society for Cognitive and Biological Psychology 2024 Annual Meeting</p>
+            <div class="gallery-links">
+              <a class="gallery-chip" href="./assets/presentations/2024KSCBP_poster.png" target="_blank" rel="noopener">Poster</a>
+              <a class="gallery-chip" href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003105060" target="_blank" rel="noopener">Abstract</a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /gallery -->
+    </div>
+
+    <footer aria-label="Footer">
+      <div>© <span id="year"></span> Daun Jung</div>
+      <div class="footer-links">
+        <a href="cv.pdf" target="_blank" rel="noopener">CV</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://osf.io/fxwbj/" target="_blank" rel="noopener">OSF</a>
+      </div>
+    </footer>
+  </main>
+
+  <script src="./script.js" defer></script>
+  <script>
+    // Filter logic
+    const btns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.gallery-card');
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          card.dataset.hidden = (filter !== 'all' && card.dataset.type !== filter) ? 'true' : 'false';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

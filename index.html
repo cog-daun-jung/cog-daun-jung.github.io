@@ -5,185 +5,526 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Daun Jung</title>
   <meta name="description" content="Daun. Visual cognition research on statistical learning, ensemble perception, and face representation." />
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,300;0,8..144,400;0,8..144,600;0,8..144,700;1,8..144,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
+  <style>
+    body { font-family: 'Roboto Serif', Georgia, serif; color: #2c1a0e; }
+    h1, h2, h3, h4, h5 { color: #2c1a0e; }
+    :root { --text: #2c1a0e; --muted: #6b4c3b; }
+
+    .mark { display: none; }
+    .brand { display: none; }
+    .nav { justify-content: center; }
+    nav ul { justify-content: center; }
+    .menu a { color: #6b4c3b; }
+    .menu a:hover { color: #2c1a0e; background: rgba(44,26,14,0.06); }
+    .menu a.active { color: #2c1a0e; background: rgba(44,26,14,0.07); border-color: rgba(44,26,14,0.18); }
+
+    /* ── Override .wrap to be full-height flex container ── */
+    .wrap { padding-bottom: 0; }
+
+    /* ── Two-pane layout ── */
+    .two-pane {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0;
+      align-items: flex-start;
+    }
+
+    /* LEFT pane: normal flow, scrolls with page */
+    .pane-left {
+      position: static;
+      height: auto;
+      overflow-y: visible;
+      padding: 28px 20px 28px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .pane-left::-webkit-scrollbar { display: none; }
+
+    /* RIGHT pane: normal scroll */
+    .pane-right {
+      padding: 28px 24px 64px 28px;
+      border-left: 1px solid rgba(44,26,14,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ── Name block ── */
+    .name-bold { font-weight: 700; }
+    .name-regular { font-weight: 400; }
+
+    .name-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 0 0 4px;
+    }
+    .name-row h1 { margin: 0; font-size: 30px; }
+    .pronouns {
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .affil-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 2px;
+    }
+    .affil-logo { height: 42px; width: auto; object-fit: contain; opacity: 0.85; }
+
+    .kicker { font-size: 15px; color: var(--muted); margin: 0 0 14px; }
+    .kicker-link { color: inherit; font-weight: 600; text-decoration: none; transition: color 140ms; }
+    .kicker-link:hover { color: #e85d1a; }
+
+    /* ── Photo slider ── */
+    .photo-slider { display: flex; flex-direction: column; gap: 0; }
+
+    .photo-frame {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(44,26,14,0.12);
+      box-shadow: 0 6px 20px rgba(44,26,14,0.10);
+      background: #e8ddd4;
+    }
+
+    .photo-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 800ms ease;
+    }
+    .photo-slide.active { opacity: 1; }
+    .photo-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Controls bar: ‹  pause  › */
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      margin-top: 0;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(44,26,14,0.10);
+      border-top: none;
+      border-radius: 0 0 14px 14px;
+      overflow: hidden;
+    }
+    .slider-controls button {
+      appearance: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 12.5px;
+      color: #6b4c3b;
+      padding: 7px 14px;
+      transition: color 140ms, background 140ms;
+      line-height: 1;
+      flex: 1;
+    }
+    .slider-controls button:hover { color: #e85d1a; background: rgba(232,93,26,0.06); }
+    .slider-controls .ctrl-divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(44,26,14,0.12);
+      flex-shrink: 0;
+    }
+
+    /* Caption */
+    .photo-caption {
+      padding: 7px 2px 0;
+      text-align: center;
+    }
+    .caption-location {
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #2c1a0e;
+      letter-spacing: 0.04em;
+      display: block;
+    }
+    .caption-date {
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 11px;
+      color: #6b4c3b;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-top: 1px;
+    }
+
+    /* Speech bubble */
+    .speech-bubble {
+      display: inline-block;
+      position: relative;
+      margin: 10px auto 0;
+      align-self: center;
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(44,26,14,0.14);
+      border-radius: 12px;
+      padding: 6px 12px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 12px;
+      color: #e85d1a;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 8px rgba(44,26,14,0.08);
+      white-space: nowrap;
+    }
+    .speech-bubble::before {
+      content: '';
+      position: absolute;
+      top: -8px; left: 50%;
+      transform: translateX(-50%);
+      border: 7px solid transparent;
+      border-bottom-color: rgba(44,26,14,0.14);
+      border-top: 0;
+    }
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      top: -6px; left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-bottom-color: rgba(255,255,255,0.85);
+      border-top: 0;
+    }
+
+    /* ── Contact cards ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(44,26,14,0.12);
+      background: rgba(255,255,255,0.35);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 2px 0 rgba(255,255,255,0.65) inset, 0 4px 14px rgba(44,26,14,0.07);
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease, border-color 160ms ease;
+      text-decoration: none;
+    }
+    .contact-email:hover, .contact-email:active {
+      background: #FFCE8A; border-color: rgba(232,140,26,0.40);
+      box-shadow: 0 2px 0 rgba(255,255,255,0.60) inset, 0 10px 24px rgba(232,140,26,0.18);
+      transform: translateY(-2px);
+    }
+    .contact-linkedin:hover, .contact-linkedin:active {
+      background: #8AC6FF; border-color: rgba(26,79,168,0.30);
+      box-shadow: 0 2px 0 rgba(255,255,255,0.60) inset, 0 10px 24px rgba(26,79,168,0.16);
+      transform: translateY(-2px);
+    }
+    .contact-scholar:hover, .contact-scholar:active {
+      background: #B8DCFF; border-color: rgba(26,79,168,0.25);
+      box-shadow: 0 2px 0 rgba(255,255,255,0.60) inset, 0 10px 24px rgba(26,79,168,0.14);
+      transform: translateY(-2px);
+    }
+    .contact-icon { display: flex; align-items: center; flex-shrink: 0; }
+    .contact-text {}
+    .contact-label { font-size: 13.5px; font-weight: 600; color: #2c1a0e; display: block; font-family: 'Roboto Serif', Georgia, serif; }
+    .contact-sub { font-size: 11.5px; color: #6b4c3b; display: block; margin-top: 1px; }
+
+    /* ── Right pane content ── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: #2c1a0e;
+      margin: 0 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1.5px;
+      background: #2c1a0e;
+      border-radius: 1px;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 14.5px;
+      line-height: 1.7;
+      margin: 0;
+      max-width: none;
+    }
+    .inline-link { color: inherit; font-weight: 700; text-decoration: none; transition: color 140ms; }
+    .inline-link:hover { color: #e85d1a; }
+
+    .pill { color: #2c1a0e; border-color: rgba(44,26,14,0.20); background: rgba(255,206,138,0.18); }
+
+    /* ── News section (right pane) ── */
+    .news-list { list-style: none; margin: 0; padding: 0; }
+    .news-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(44,26,14,0.07);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #6b4c3b;
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 0 14px;
+      align-items: baseline;
+    }
+    .news-list li:last-child { border-bottom: none; }
+    .news-date {
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 11px;
+      color: #e85d1a;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 820px) {
+      .two-pane { grid-template-columns: 1fr; min-height: unset; }
+      .pane-left { position: static; height: auto; padding: 20px 0 0; }
+      .pane-right { border-left: none; border-top: 1px solid rgba(44,26,14,0.08); padding: 20px 0 40px; }
+      .photo-frame { max-width: 260px; }
+    }
+  </style>
 </head>
 
 <body>
   <header>
     <div class="nav">
-        
-      <a class="brand" href="#top" aria-label="Go to top">
-        <span class="mark" aria-hidden="true"></span>
-        <span class="name">Daun Jung</span>
-        <span class="tag">Cognitive Science Researcher</span>
-      </a>
-
-    <nav aria-label="Primary">
-    <ul class="menu">
-        <li><a href="index.html" data-nav="index">About</a></li>
-        <li><a href="publications.html" data-nav="publications">Publications</a></li>
-        <li><a href="talks.html" data-nav="talks">Talks</a></li>
-        <li><a href="projects.html" data-nav="projects">Projects</a></li>
-        <li><a class="btn" href="cv.pdf" target="_blank" rel="noopener">CV</a></li>
-    </ul>
-    </nav>
-
+      <a class="brand" href="#top" aria-label="Go to top"><span class="mark"></span></a>
+      <nav aria-label="Primary">
+        <ul class="menu">
+          <li><a href="index.html" data-nav="index">About</a></li>
+          <li><a href="publications.html" data-nav="publications">Publications</a></li>
+          <li><a href="presentations.html" data-nav="presentations">Presentations</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
   <main id="top" class="wrap">
-    <section class="hero" aria-label="Hero">
-      <div class="card hero-left">
-        <p class="kicker">Researcher in visual perception and cognitive information processing</p>
-        <h1>Daun Jung</h1>
+    <div class="two-pane">
 
-        <div class="hero-intro">
-        <img
-            src="assets/profile.jpg"
-            alt="Portrait of Daun Jung"
-            class="hero-profile"
-        />
+      <!-- ══ LEFT PANE ══ -->
+      <aside class="pane-left">
 
-        <p class="lead">
-            Hello! I am Daun Jung.<br><br>
-            I received my bachelor’s degree from
+        <!-- Name + pronouns -->
+        <div>
+          <div class="name-row">
+            <h1><span class="name-bold">Daun</span> <span class="name-regular">Jung</span></h1>
+            <span class="pronouns">(she/her)</span>
+          </div>
+        </div>
+
+        <!-- Photo slider -->
+        <div class="photo-slider">
+          <div class="photo-frame" id="photoFrame"></div>
+          <div class="slider-controls">
+            <button id="btnPrev" aria-label="Previous photo">&#8249;</button>
+            <div class="ctrl-divider"></div>
+            <button id="btnPause" aria-label="Pause slideshow">pause</button>
+            <div class="ctrl-divider"></div>
+            <button id="btnNext" aria-label="Next photo">&#8250;</button>
+          </div>
+          <div class="photo-caption">
+            <span class="caption-location" id="captionLocation"></span>
+            <span class="caption-date" id="captionDate"></span>
+          </div>
+          <div class="speech-bubble">✈ I'm a traveler!</div>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <div class="section-label">Contact</div>
+          <div class="contact-grid">
+            <a class="contact-item contact-email" href="mailto:daunjung@yonsei.ac.kr">
+              <span class="contact-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2c1a0e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+              </span>
+              <span class="contact-text">
+                <span class="contact-label">Email</span>
+                <span class="contact-sub">daunjung(at)yonsei.ac.kr</span>
+              </span>
+            </a>
+            <a class="contact-item contact-linkedin" href="https://www.linkedin.com/in/cogdaunjung/" target="_blank" rel="noopener">
+              <span class="contact-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#2c1a0e"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </span>
+              <span class="contact-text">
+                <span class="contact-label">LinkedIn</span>
+                <span class="contact-sub">cogdaunjung</span>
+              </span>
+            </a>
+            <a class="contact-item contact-scholar" href="https://scholar.google.com/citations?hl=en&user=KvR-q0YAAAAJ" target="_blank" rel="noopener">
+              <span class="contact-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#2c1a0e"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 100 14 7 7 0 000-14z"/></svg>
+              </span>
+              <span class="contact-text">
+                <span class="contact-label">Google Scholar</span>
+                <span class="contact-sub">scholar.google.com</span>
+              </span>
+            </a>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- ══ RIGHT PANE ══ -->
+      <div class="pane-right">
+
+        <!-- About -->
+        <div>
+          <!-- Logos + kicker above About -->
+          <div class="affil-row" style="margin-bottom: 6px;">
+            <img src="assets/logos/yonsei.png" alt="Yonsei University" class="affil-logo" onerror="this.style.display='none';">
+            <img src="assets/logos/vcc.png" alt="VCC Lab" class="affil-logo" onerror="this.style.display='none';">
+          </div>
+          <p class="kicker" style="margin-bottom: 16px;">Master's Candidate, <a href="https://vcc.yonsei.ac.kr/" target="_blank" rel="noopener" class="kicker-link">Vision, Cognition and Consciousness Lab</a></p>
+
+          <div class="section-label">About</div>
+          <p class="lead">
+            I received my bachelor's degree from
             <a href="https://www.yonsei.ac.kr/en_sc/index.do" class="inline-link">Yonsei University</a>,
             where I double-majored in Library and Information Science and Computer Science, and completed an interdisciplinary program in Cognitive Science.
-            My undergraduate studies were fully supported by the <a href="https://www.iljufoundation.org/homepage/index.do" class="inline-link">ILJU Foundation</a>.
+            My undergraduate studies were fully supported by the <a href="https://www.iljufoundation.org/homepage/index.do" class="inline-link">ILJU Academy and Culture Foundation</a>.
             <br><br>During my studies, I participated in international academic programs,
             including a summer school at the University of Leeds
             and an exchange program at the University of Massachusetts Amherst,
             where I studied Brain and Psychological Sciences.
-            <br><br>I began a combined bachelor’s–master’s program in my third year
-            and am currently pursuing a master’s degree in Cognitive Science,
+            <br><br>I began a combined bachelor's–master's program in my third year
+            and am currently pursuing a master's degree in Cognitive Science,
             where I was selected as a university scholar and receive full financial support.
-            <br><br>For more details, please see my <a href="cv.pdf" class="inline-link"> Curriculum Vitae (CV)</a>.
-            <br>You can also find me on
-            <a href="https://www.linkedin.com/in/cogdaunjung/" class="inline-link">LinkedIn</a> and 
-            <a href="https://scholar.google.com/citations?hl=en&user=KvR-q0YAAAAJ" class="inline-link">Google Scholar</a>.
+            <br><br>For more details, please see my <a href="cv.pdf" class="inline-link">Curriculum Vitae (CV)</a>.
+          </p>
         </div>
 
-        <div class="meta" aria-label="Quick facts">
-          <span class="pill">Vision science</span>
-          <span class="pill">Brain & Cognitive Neuroscience</span>
-          <span class="pill">Computational Modeling</span>
+        <!-- News -->
+        <div>
+          <div class="section-label">News</div>
+          <ul class="news-list">
+            <li>
+              <span class="news-date">MAY 2026</span>
+              <span>Presented a poster at the Vision Sciences Society Annual Meeting 2026.</span>
+            </li>
+            <li>
+              <span class="news-date">JAN 2026</span>
+              <span>Gave an oral presentation at the Korean Society for Cognitive and Biological Psychology Annual Meeting.</span>
+            </li>
+            <li>
+              <span class="news-date">JAN 2026</span>
+              <span>Received the Best Project Award at the Korean Computational Neuroscience Winter School.</span>
+            </li>
+            <li>
+              <span class="news-date">FEB 2024</span>
+              <span>Presented a poster at the Korean Society for Cognitive and Biological Psychology Annual Meeting.</span>
+            </li>
+          </ul>
         </div>
-        
-        <div class="contact-grid" aria-label="Contact">
-          <a class="card mini contact-item" href="mailto:daunjung@yonsei.ac.kr">
-            <h3>Email</h3>
-            <p>daunjung(at)yonsei(dot)ac(dot)kr</p>
-          </a>
 
-          <a class="card mini contact-item" href="https://www.linkedin.com/in/cogdaunjung/" target="_blank" rel="noopener">
-            <h3>LinkedIn</h3>
-            <p>linkedin.com/in/cogdaunjung</p>
-          </a>
-
-          <a class="card mini contact-item" href="https://scholar.google.com/citations?hl=en&user=KvR-q0YAAAAJ" target="_blank" rel="noopener">
-            <h3>Google Scholar</h3>
-            <p>scholar.google.com</p>
-          </a>
-        </div>
-
-      </div>
-
-    </section>
-
-    <section aria-label="Now">
-      <h2>Research Interests</h2>
-
-      <div class="grid3">
-        <div class="card mini interest">
-          <div class="mini-demo" aria-label="Ensemble Perception demo">
-            <canvas class="miniCanvas" id="demoEnsemble"></canvas>
+        <footer aria-label="Footer" style="margin-top: auto; padding-top: 24px; border-top: 1px solid rgba(44,26,14,0.08); color: #6b4c3b; font-size: 13px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+          <div>© <span id="year"></span> Daun Jung</div>
+          <div style="display:flex; gap:10px;">
+            <a href="cv.pdf" target="_blank" rel="noopener" style="color:#6b4c3b;">CV</a>
+            <span>·</span>
+            <a href="https://osf.io/fxwbj/" target="_blank" rel="noopener" style="color:#6b4c3b;">OSF</a>
           </div>
-          <h3>Ensemble Perception</h3>
-          <p>Implicit versus explicit extraction of distribution shape in visual arrays.</p>
-        </div>
+        </footer>
 
-        <div class="card mini interest">
-          <div class="mini-demo" aria-label="Face Learning and Aging demo">
-            <canvas class="miniCanvas" id="demoFace"></canvas>
-          </div>
-          <h3>Face Learning and Aging</h3>
-          <p>How face representations change with experience, familiarity, and time.</p>
-        </div>
-
-        <div class="card mini interest">
-          <div class="mini-demo" aria-label="Decision Making demo">
-            <canvas class="miniCanvas" id="demoDecision"></canvas>
-          </div>
-          <h3>Visual Search and Decision Making</h3>
-          <p>Evidence accumulation, thresholds, and adaptive choice under uncertainty.</p>
-        </div>
-      </div>
-    </section>
-
-
-    <section id="research" aria-label="Research highlights">
-      <div class="section-title">
-        <h2>Recent Highlights</h2>
-      </div>
-
-      <div class="highlights">
-        <div class="card hl">
-          <div class="thumb" aria-hidden="true"></div>
-          <div>
-            <h3>Ensemble statistics and distribution learning</h3>
-            <p>How observers internalize feature distributions beyond the mean, and when that knowledge becomes explicit.</p>
-            <div class="links">
-              <a class="chip" href="research.html">Project page</a>
-              <a class="chip" href="https://github.com/" target="_blank" rel="noopener">Code</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card hl">
-          <div class="thumb" aria-hidden="true"></div>
-          <div>
-            <h3>Ensemble statistics and distribution learning</h3>
-            <p>How observers internalize feature distributions beyond the mean, and when that knowledge becomes explicit.</p>
-            <div class="links">
-              <a class="chip" href="research.html">Project page</a>
-              <a class="chip" href="https://github.com/" target="_blank" rel="noopener">Code</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!--<section id="outputs" aria-label="Selected outputs">
-      <div class="section-title">
-        <h2>Selected outputs</h2>
-      </div>
-
-      <div class="card about">
-        <div class="links" role="list">
-          <a class="chip" role="listitem" href="posters.html">Posters</a>
-          <a class="chip" role="listitem" href="publications.html">Publications</a>
-          <a class="chip" role="listitem" href="slides.html">Slides</a>
-          <a class="chip" role="listitem" href="code.html">Code</a>
-          <a class="chip" role="listitem" href="cv.pdf" target="_blank" rel="noopener">CV PDF</a>
-        </div>
-      </div>
-    </section>-->
-
-
-    <footer aria-label="Footer">
-      <div>© <span id="year"></span> Daun Jung</div>
-      <div class="footer-links">
-        <a href="#top">Back to top</a>
-        <span aria-hidden="true">·</span>
-        <a href="cv.pdf" target="_blank" rel="noopener">CV</a>
-        <span aria-hidden="true">·</span>
-        <a href="https://osf.io/fxwbj/" target="_blank" rel="noopener">OSF</a>
-      </div>
-    </footer>
+      </div><!-- /pane-right -->
+    </div><!-- /two-pane -->
   </main>
 
   <script src="./script.js" defer></script>
+  <script>
+    // ── Photo slider ──
+    // Replace src values with your actual photo paths
+    const PHOTOS = [
+      { src: "assets/profile/kyoto.jpg",    location: "Kyoto, Japan",    date: "APR 2026" },
+      { src: "assets/profile/tainan.jpg",   location: "Tainan, Taiwan", date: "DEC 2025" },
+      { src: "assets/profile/seoul.jpg",  location: "Seoul, Korea",  date: "AUG 2025" },
+      { src: "assets/profile/ny.png",    location: "NewYork, U.S.", date: "NOV 2024" },
+    ];
+
+    (function initSlider() {
+      const frame    = document.getElementById("photoFrame");
+      const locEl    = document.getElementById("captionLocation");
+      const dateEl   = document.getElementById("captionDate");
+      const btnPrev  = document.getElementById("btnPrev");
+      const btnPause = document.getElementById("btnPause");
+      const btnNext  = document.getElementById("btnNext");
+      if (!frame) return;
+
+      // Build slides
+      PHOTOS.forEach((p, i) => {
+        const div = document.createElement("div");
+        div.className = "photo-slide" + (i === 0 ? " active" : "");
+        const img = document.createElement("img");
+        img.src = p.src;
+        img.alt = p.location;
+        img.onerror = function () {
+          div.style.background = "linear-gradient(135deg,rgba(232,93,26,0.15),rgba(255,206,138,0.25),rgba(26,79,168,0.10))";
+          this.style.display = "none";
+        };
+        div.appendChild(img);
+        frame.appendChild(div);
+      });
+
+      const slides = frame.querySelectorAll(".photo-slide");
+      let current = 0;
+      let playing = true;
+      let timer = null;
+
+      function updateCaption() {
+        locEl.textContent  = PHOTOS[current].location;
+        dateEl.textContent = PHOTOS[current].date;
+      }
+
+      function show(idx) {
+        slides[current].classList.remove("active");
+        current = (idx + PHOTOS.length) % PHOTOS.length;
+        slides[current].classList.add("active");
+        updateCaption();
+      }
+
+      function startAuto() {
+        stopAuto();
+        timer = setInterval(() => show(current + 1), 4000);
+      }
+      function stopAuto() {
+        if (timer) { clearInterval(timer); timer = null; }
+      }
+
+      btnPrev.addEventListener("click", () => { show(current - 1); if (playing) startAuto(); });
+      btnNext.addEventListener("click", () => { show(current + 1); if (playing) startAuto(); });
+      btnPause.addEventListener("click", () => {
+        playing = !playing;
+        btnPause.textContent = playing ? "pause" : "play";
+        playing ? startAuto() : stopAuto();
+      });
+
+      updateCaption();
+      startAuto();
+    })();
+  </script>
 </body>
 </html>

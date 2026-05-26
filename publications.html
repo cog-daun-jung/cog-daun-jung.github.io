@@ -3,8 +3,142 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Members | Access</title>
+  <title>Publications | Daun Jung</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,300;0,8..144,400;0,8..144,600;0,8..144,700;1,8..144,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css" />
+  <style>
+    body { font-family: 'Roboto Serif', Georgia, serif; color: #2c1a0e; }
+    h1, h2, h3 { color: #2c1a0e; }
+    :root { --text: #2c1a0e; --muted: #6b4c3b; }
+    .mark { display: none; }
+    .brand { display: none; }
+    .nav { justify-content: center; }
+    nav ul { justify-content: center; }
+    .menu a { color: #6b4c3b; }
+    .menu a:hover { color: #2c1a0e; background: rgba(44,26,14,0.06); }
+    .menu a.active { color: #2c1a0e; background: rgba(44,26,14,0.07); border-color: rgba(44,26,14,0.18); }
+
+    /* Page title */
+    .page-title {
+      margin: 0 0 6px;
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .page-note {
+      color: var(--muted);
+      font-size: 13.5px;
+      font-style: italic;
+      margin: 0 0 28px;
+      line-height: 1.5;
+    }
+
+    /* Section headers */
+    .pub-section {
+      margin-top: 32px;
+    }
+    .pub-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #e85d1a;
+      margin: 0 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(232,93,26,0.20);
+    }
+
+    /* Publication entry */
+    .pub-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .pub-item {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 0 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(44,26,14,0.08);
+      align-items: baseline;
+    }
+    .pub-item:last-child { border-bottom: none; }
+    .pub-num {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+      padding-top: 2px;
+      user-select: none;
+    }
+    .pub-content {}
+    .pub-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #2c1a0e;
+      line-height: 1.4;
+      margin: 0 0 4px;
+    }
+    .pub-authors {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0 0 4px;
+      line-height: 1.5;
+    }
+    .pub-authors strong {
+      color: #2c1a0e;
+      font-weight: 700;
+    }
+    .pub-venue {
+      font-size: 13px;
+      font-style: italic;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+    .pub-note {
+      font-size: 12.5px;
+      color: #6b4c3b;
+      background: rgba(255,206,138,0.20);
+      border-left: 3px solid rgba(232,93,26,0.40);
+      padding: 5px 10px;
+      border-radius: 0 6px 6px 0;
+      margin: 6px 0 8px;
+      line-height: 1.5;
+    }
+    .pub-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .pub-chip {
+      font-size: 12px;
+      color: #2c1a0e;
+      border: 1px solid rgba(44,26,14,0.18);
+      background: rgba(255,255,255,0.65);
+      padding: 4px 10px;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+      font-family: 'Roboto Serif', Georgia, serif;
+    }
+    .pub-chip:hover {
+      background: rgba(232,93,26,0.10);
+      border-color: rgba(232,93,26,0.35);
+      color: #e85d1a;
+    }
+    .pub-chip.primary {
+      background: rgba(232,93,26,0.08);
+      border-color: rgba(232,93,26,0.28);
+      font-weight: 600;
+    }
+    .pub-chip.primary:hover {
+      background: rgba(232,93,26,0.16);
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -12,131 +146,95 @@
       <a class="brand" href="index.html" aria-label="Go to About">
         <span class="mark" aria-hidden="true"></span>
         <span class="name">Daun Jung</span>
-        <span class="tag">Cognitive Science Researcher</span>
       </a>
-
       <nav aria-label="Primary">
         <ul class="menu">
           <li><a href="index.html" data-nav="index">About</a></li>
-          <li><a href="publications.html" data-nav="publications">Publications</a></li>
-          <li><a href="talks.html" data-nav="talks">Talks</a></li>
-          <li><a href="projects.html" data-nav="projects">Projects</a></li>
-          <li><a class="btn" href="cv.pdf" target="_blank" rel="noopener">CV</a></li>
+          <li><a href="publications.html" data-nav="publications" class="active">Publications</a></li>
+          <li><a href="presentations.html" data-nav="presentations">Presentations</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="card" style="padding:18px;">
-      <h1 style="margin:0 0 10px;">Members Area</h1>
-      <p style="margin:0 0 14px; color: var(--muted);">
-        Enter the shared password to access internal resources.
-      </p>
+    <div class="card" style="padding: 24px 28px 28px;">
+      <h1 class="page-title">Publications</h1>
 
-      <form id="gateForm" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-        <input
-          id="pw"
-          type="password"
-          placeholder="Shared password"
-          autocomplete="current-password"
-          style="padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.15); color:inherit; min-width:260px;"
-          required
-        />
-        <button class="btn" type="submit">Enter</button>
-        <button class="btn" type="button" id="logoutBtn" style="display:none;">Log out</button>
-      </form>
+      <!-- Preprints -->
+      <div class="pub-section">
+        <div class="pub-section-title">PREPRINTS</div>
+        <ol class="pub-list" reversed>
 
-      <p id="msg" style="margin:12px 0 0; color: var(--muted); font-size:.95rem;"></p>
-    </section>
+          <li class="pub-item">
+            <span class="pub-num"></span>
+            <div class="pub-content">
+              <p class="pub-title">Revisiting the dissociation of explicit and implicit ensemble representations.Poster presentation </p>
+              <p class="pub-authors"><strong>Jung, D.</strong>, Park, J., & Chong, S. C.</p>
+              <!--<p class="pub-venue"><em>arXiv preprint</em> (2025).</p>-->
+              <div class="pub-links">
+                <!--<a class="pub-chip primary" href="#" target="_blank" rel="noopener">[PDF]</a>
+                <a class="pub-chip" href="#" target="_blank" rel="noopener">[arXiv]</a>-->
+              </div>
+            </div>
+          </li>
 
-    <section class="card" id="contentCard" style="padding:18px; margin-top:14px; display:none;">
-      <div id="content"></div>
-    </section>
+        </ol>
+      </div>
+      
+      <!-- Journal Articles -->
+      <div class="pub-section">
+        <div class="pub-section-title">Journal Articles</div>
+        <ol class="pub-list" reversed>
+
+          <li class="pub-item">
+            <span class="pub-num">1</span>
+            <div class="pub-content">
+              <p class="pub-title">The effect of reducing the refresh rate of a task-irrelevant window on the temporal and spatial resolution of a task-relevant window</p>
+              <p class="pub-authors">Yeo, Y., <strong>Jung, D.</strong>, Kim, C., Park, J. H., Cho, J., Choi, J., & Chong, S. C. </p>
+              <p class="pub-venue"><em>The Korean Journal of Cognitive & Biological Psychology</em>, 36(3), 99-109.</p>
+              <div class="pub-links">
+                <a class="pub-chip primary" href="https://www.kci.go.kr/kciportal/landing/article.kci?arti_id=ART003105060" target="_blank" rel="noopener">DOI</a>
+              </div>
+            </div>
+          </li>
+
+        </ol>
+      </div>
+
+      <!-- Conference Proceedings -->
+      <!--<div class="pub-section">
+        <div class="pub-section-title">Conference Proceedings</div>
+        <ol class="pub-list" reversed>
+
+          <li class="pub-item">
+            <span class="pub-num">1</span>
+            <div class="pub-content">
+              <p class="pub-title">Title of Conference Paper</p>
+              <p class="pub-authors"><strong>Daun Jung</strong>, Co-author Name</p>
+              <p class="pub-venue"><em>Proceedings of Conference Name</em> (2025).</p>
+              <div class="pub-links">
+                <a class="pub-chip primary" href="#" target="_blank" rel="noopener">[PDF]</a>
+                <a class="pub-chip" href="#" target="_blank" rel="noopener">[Slides]</a>
+              </div>
+            </div>
+          </li>
+
+        </ol>
+      </div>-->
+
+
+    </div>
+
+    <footer aria-label="Footer">
+      <div>© <span id="year"></span> Daun Jung</div>
+      <div class="footer-links">
+        <a href="cv.pdf" target="_blank" rel="noopener">CV</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://osf.io/fxwbj/" target="_blank" rel="noopener">OSF</a>
+      </div>
+    </footer>
   </main>
-
-  <script>
-    // ----------------------------
-    // Weak gate: shared password
-    // ----------------------------
-    // Change this periodically. Do NOT reuse personal passwords.
-    const SHARED_PASSWORD = "vcc";
-
-    const STORAGE_KEY = "members_gate_ok";
-    const form = document.getElementById("gateForm");
-    const pw = document.getElementById("pw");
-    const msg = document.getElementById("msg");
-    const contentCard = document.getElementById("contentCard");
-    const contentDiv = document.getElementById("content");
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    function setAuthedUI() {
-      msg.textContent = "Access granted.";
-      contentCard.style.display = "block";
-      logoutBtn.style.display = "inline-block";
-      pw.value = "";
-      pw.blur();
-    }
-
-    function setLockedUI(text = "Access locked.") {
-      msg.textContent = text;
-      contentCard.style.display = "none";
-      logoutBtn.style.display = "none";
-      contentDiv.innerHTML = "";
-    }
-
-    async function loadMembersContent() {
-      // Internal content is fetched only after auth
-      const res = await fetch("./members-content.html", { cache: "no-store" });
-      if (!res.ok) throw new Error("Failed to load members content");
-      const html = await res.text();
-      contentDiv.innerHTML = html;
-
-      // If members-content.html includes <script> tags (like giscus),
-      // they may not execute when inserted via innerHTML.
-      // So we re-insert scripts manually:
-      const scripts = contentDiv.querySelectorAll("script");
-      scripts.forEach(old => {
-        const s = document.createElement("script");
-        for (const attr of old.attributes) s.setAttribute(attr.name, attr.value);
-        s.text = old.text || "";
-        old.replaceWith(s);
-      });
-    }
-
-    async function unlock() {
-      try {
-        setAuthedUI();
-        await loadMembersContent();
-      } catch (e) {
-        setLockedUI("Access granted, but content failed to load.");
-        console.error(e);
-      }
-    }
-
-    // Auto-unlock if already stored
-    if (localStorage.getItem(STORAGE_KEY) === "1") {
-      unlock();
-    } else {
-      setLockedUI("Please enter the shared password.");
-    }
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (pw.value === SHARED_PASSWORD) {
-        localStorage.setItem(STORAGE_KEY, "1");
-        await unlock();
-      } else {
-        setLockedUI("Wrong password.");
-      }
-    });
-
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem(STORAGE_KEY);
-      setLockedUI("Logged out.");
-    });
-  </script>
-
   <script src="./script.js" defer></script>
 </body>
 </html>

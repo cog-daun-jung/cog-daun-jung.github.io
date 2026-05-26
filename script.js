@@ -21,8 +21,7 @@
     "": "index",
     "index.html": "index",
     "publications.html": "publications",
-    "talks.html": "talks",
-    "projects.html": "projects",
+    "presentations.html": "presentations", 
     "inprogress.html": "inprogress",
     "inprogress.htm": "inprogress",
   };
