@@ -47,13 +47,184 @@
     </div>
 
     <div class="card project-body">
-
       <p>A three-day, two-night winter school centered on the theory, modeling, and analytical methods of computational neuroscience, combining invited talks with team-based project work.</p>
-      <div class="panel-links">
-        <a class="chip" href="https://www.cbrain.org/%ED%95%99%EC%88%A0%ED%96%89%EC%82%AC/2026-%EA%B2%A8%EC%9A%B8%ED%95%99%EA%B5%90" target="_blank" rel="noopener">Event page ↗</a>
+
+  <p class="project-intro">
+    A real-time gesture-to-language game agent inspired by
+    <strong>Hangeul composition and spatial representation</strong>,
+    developed at the 2026 Winter School on Computational Neuroscience.
+  </p>
+
+
+  <p class="embed-label">Challenge</p>
+
+  <p>
+    Our challenge was to develop a <strong>“CBrain Speed Game Agent”</strong>
+    that could transform nonverbal gestures into meaningful signals in real time.
+    Some team members communicated through gestures captured by a laptop webcam,
+    while the remaining members had to identify target words using only the
+    transformed signals projected onto a screen. Teams were evaluated based on
+    both <strong>accuracy and speed</strong>.
+  </p>
+
+  <p>
+    The key constraint was that the original webcam feed could not be shown directly.
+    Each team therefore had to design its own mechanism for
+    <strong>filtering and transforming physical gestures into indirect visual signals</strong>
+    before transmitting them to the receivers.
+  </p>
+
+  <p class="embed-label">Our Approach — Han-Grid Cell</p>
+      <div class="img-row cols-2">
+        <figure class="img-frame"><img src="../assets/projects/2026CBNS/contest1.jpg" loading="lazy"></figure>
+        <figure class="img-frame"><img src="../assets/projects/2026CBNS/contest2.jpg" loading="lazy"></figure>
+      </div>
+  <p>
+    Our team developed <strong>Han-Grid Cell</strong>, a rule-based game agent
+    that converted gestures into Korean characters through a real-time webcam
+    recognition pipeline.
+  </p>
+
+  <p>
+    The system drew on two ideas: the spatial structure of the Korean
+    <strong>Cheonjiin (천지인) keyboard layout</strong> and a playful concept
+    inspired by grid cells, which we had learned about during
+    the winter school. We imagined a virtual “rat” navigating a spatial character
+    grid toward particular Korean letters, turning spatial gestures into
+    language-related signals.
+  </p>
+
+  <p>
+    Rather than transmitting gestures directly, the system mapped them onto
+    components of Hangeul. Over the course of the competition, we iteratively
+    redesigned this interaction through two substantially different versions.
+  </p>
+
+  <p class="embed-label">Version 1 — Sequential Gesture Input</p>
+      <div class="video-embed">
+        <video controls preload="metadata">
+          <source src="../assets/projects/2026CBNS/demo_ver1.mov" type="video/mp4">
+          Your browser doesn't support embedded video.
+        </video>
+      </div>
+      <div class="img-caption" style="display:flex; justify-content:space-around; margin-top:-6px;">
+        <span>30 seconds to type a single word. 
+          Now think about how fast we communicate with language!</span>
+      </div>
+  <p>
+    The first version used two signal senders: one responsible
+    for consonants and the other for vowels. After memorizing the Cheonjiin layout,
+    each sender selected characters using a predefined set of hand gestures.
+  </p>
+
+  <p>
+    Because senders were not allowed to see their own webcam image directly,
+    we displayed only a hand-skeleton representation as indirect
+    visual feedback. The right hand was used to point to a character location,
+    while a left-hand fist confirmed the selection and displayed the corresponding
+    character as output.
+  </p>
+
+  <p>
+    This version achieved high accuracy and placed our team near the top during
+    the intermediate evaluation, allowing us to advance to the next stage.
+    However, it also revealed a major bottleneck:
+    the interaction was too sequential and gesture-intensive.
+    Pointing, confirming, and correcting an input each required a different gesture,
+    making the protocol difficult to memorize and limiting communication speed.
+  </p>
+
+  <p class="embed-label">Version 2 — Parallelized Hangeul Input</p>
+      <div class="video-embed">
+        <video controls preload="metadata">
+          <source src="../assets/projects/2026CBNS/demo_ver2.mov" type="video/mp4">
+          Your browser doesn't support embedded video.
+        </video>
       </div>
 
+  <p>
+    Based on the limitations of Version 1, we redesigned the system for the next
+    stage. Instead of simply optimizing individual gestures, we changed the
+    interaction architecture itself by taking advantage of the
+    compositional structure of Hangeul.
+  </p>
+
+  <p>
+    Version 2 divided the interaction into four parallel roles.
+    Three members were assigned to the
+    initial consonant (choseong), medial vowel (jungseong), and final
+    consonant (jongseong), while a fourth member served as a coordinator
+    who monitored and mediated the overall input process.
+  </p>
+
+  <p>
+    The display was vertically divided into four regions corresponding to these
+    roles, allowing multiple components of a Hangeul syllable to be communicated
+    in parallel. The coordinator needed to remember only two signals:
+    complete and reset.
+  </p>
+
+  <p>
+    This redesign reduced the complexity of the gesture vocabulary and replaced
+    the largely sequential workflow of Version 1 with a more
+    parallel communication process, enabling the team to transmit
+    information more efficiently.
+  </p>
+
+  <p class="embed-label">Human–Agent Collaboration</p>
+
+  <p>
+    An important part of the final system was not the agent alone, but how the
+    receiving team members interpreted its partial and occasionally
+    imperfect outputs.
+  </p>
+
+  <p>
+    Because Hangeul syllables have a highly structured composition, receivers
+    could often anticipate a word before every component had been fully transmitted.
+    Even when a character was incorrectly entered, the intended word could sometimes
+    be recovered from the surrounding linguistic context.
+  </p>
+
+  <p>
+    The final performance therefore emerged from a combination of
+    machine-mediated signal transformation, parallel human input,
+    and context-based human inference. Rather than replacing human
+    interpretation, the system provided structured cues that team members could
+    rapidly integrate and complete.
+  </p>
+
+
+  <p class="embed-label">Outcome &amp; Takeaways</p>
+        <div class="img-row cols-2">
+        <figure class="img-frame"><img src="../assets/projects/2026CBNS/prize1.jpg" loading="lazy"></figure>
+        <figure class="img-frame"><img src="../assets/projects/2026CBNS/prize2.jpg" loading="lazy"></figure>
+      </div>
+  <p>
+    Among 10 teams, our team advanced through the preliminary
+    round, semifinals, and finals, ultimately winning
+    <strong>1st Place and the Grand Prize</strong> based on combined accuracy
+    and problem-solving speed.
+  </p>
+
+  <p>
+    The project gave me firsthand experience with
+    rapid prototyping and iterative system design.
+    Our first solution was accurate but inefficient; identifying that bottleneck
+    and redesigning the interaction around parallel processing resulted in a
+    substantially more effective second version.
+  </p>
+
+  <p>
+    More broadly, the project showed me how concepts encountered in
+    computational neuroscience and cognitive science can serve as inspiration
+    for interactive system design. It also highlighted how effective
+    human–agent systems can emerge from the interaction between
+    machine-transformed information and human perception,
+    inference, and communication.
+  </p>
     </div>
+
 
     <nav class="project-pagenav">
       <a href="../projects.html"><span class="dir">&larr; Previous</span>All Projects</a>

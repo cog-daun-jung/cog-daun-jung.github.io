@@ -256,7 +256,7 @@ h1{
   color: var(--muted);
   font-size: 15px;
   line-height: 1.5;
-  max-width: 70ch;
+  max-width: 100ch;
 }
 
 .hero-actions{
@@ -824,7 +824,7 @@ footer{
 
 .projects-hero{ padding: 22px 0 6px; }
 .projects-hero h1{ margin: 0 0 8px; font-size: 32px; letter-spacing: -0.02em; }
-.projects-hero .lead{ max-width: 68ch; }
+.projects-hero .lead{ max-width: 200ch; }
 
 /* Filter chips */
 .filter-chips{
