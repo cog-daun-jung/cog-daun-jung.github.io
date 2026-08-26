@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,300;0,8..144,400;0,8..144,600;0,8..144,700;1,8..144,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="../style.css" />
   <style>
     body { font-family: 'Roboto Serif', Georgia, serif; color: #2c1a0e; }
     .nav { justify-content: center; }
@@ -21,11 +21,11 @@
     <div class="nav">
       <nav aria-label="Primary">
         <ul class="menu">
-          <li><a href="index.html" data-nav="index">About</a></li>
-          <li><a href="publications.html" data-nav="publications">Publications</a></li>
-          <li><a href="presentations.html" data-nav="presentations">Presentations</a></li>
-          <li><a href="projects.html" data-nav="projects">Projects</a></li>
-          <li><a href="sketches.html" data-nav="sketches">Sketches</a></li>
+          <li><a href="../index.html" data-nav="index">About</a></li>
+          <li><a href="../publications.html" data-nav="publications">Publications</a></li>
+          <li><a href="../presentations.html" data-nav="presentations">Presentations</a></li>
+          <li><a href="../projects.html" data-nav="projects">Projects</a></li>
+          <li><a href="../sketches.html" data-nav="sketches">Sketches</a></li>
         </ul>
       </nav>
     </div>
@@ -33,7 +33,7 @@
 
   <main class="wrap">
 
-    <div class="project-breadcrumb"><a href="projects.html">&larr; All Projects</a></div>
+    <div class="project-breadcrumb"><a href="../projects.html">&larr; All Projects</a></div>
 
     <div class="project-page-head">
       <div class="section-label">Projects</div>
@@ -45,30 +45,81 @@
       </div>
     </div>
 
+    <nav class="subproject-nav" aria-label="Sub-projects">
+      <a href="#psychopy">1. The Effect of Mask Wearing on Face Recognition</a>
+      <a href="#sentience">2. The Effect of Spatial Cues on Iconic Memory</a>
+      <a href="#hackathon">3. Idea Hackathon: Tom & Jerry</a>
+    </nav>
+
     <div class="card project-body">
 
       <p>A year-long study community for students from various majors across the country with a shared interest in brain and cognitive science, built around paper presentations and replication studies.</p>
-
-      <div class="blog-sub">
+<p class="note-box"><strong>Note.</strong> These undergraduate projects were part of my early training in cognitive science, where I learned experimental methods by reading papers, replicating existing paradigms, and designing small-scale studies. They are presented here as learning projects rather than fully developed research studies; in retrospect, their methodological limitations became valuable lessons for designing more rigorous experiments.</p>      <div class="blog-sub" id="psychopy">
         <h4><span class="step-num">1</span>PsychoPy: Visual Experiment Design &amp; Replication</h4>
         <p>Designed and ran a visual experiment using PsychoPy, replicating and extending prior work as <em>"The Effect of Mask Wearing on Face Recognition."</em></p>
+        <p class="embed-label">Background & Abstract</p>
+        <p>This project was conducted as a follow-up to the Introduction to Visual Perception study group, with the goal of applying our knowledge of vision science to experimental design and replicating previous research in a contemporary context.
+        As face masks became widespread during the COVID-19 pandemic, questions emerged about how covering facial features might affect face recognition. Building on research on holistic face processing and <a class="inline-link" href="https://doi.org/10.1038/s41598-022-22772-2" target="_blank" rel="noopener">Castelli et al. (2022)</a>, we investigated whether wearing a face mask during learning and recognition affects face identification performance in Korean participants.</p>
+        <p class="embed-label">Experimental Design</p>
+        <div class="img-row">
+          <figure class="img-frame"><img src="../assets/projects/2023-2024BCSC/project1.png" alt="Interface overview" loading="lazy" class="lightbox-img"></figure>
+          </figure>
+        </div>
+        <p>The experiment was adapted from <a class="inline-link" href="https://doi.org/10.1038/s41598-022-22772-2" target="_blank" rel="noopener">Castelli et al. (2022)</a> and implemented in PsychoPy. Participants learned associations between faces and voices of four Korean male speakers and subsequently completed a matching task.
+        We manipulated whether each face was presented with or without a mask during the learning and matching phases, resulting in four conditions: Mask–Mask, Mask–No Mask, No Mask–Mask, and No Mask–No Mask. Face stimuli were selected from the Chicago Face Database, and Korean AI-generated voices were used as auditory cues.</p>
+        <p class="embed-label">Results & Analysis</p>
+        <p>We first examined recognition accuracy across individual face and voice stimuli and found variability in performance across stimuli. We then compared accuracy across the four mask conditions.
+        Although mean accuracy varied across conditions, no statistically significant effect of mask condition on face identification accuracy was observed (<em>p</em> > .05). The limited number of observations per condition and variability in voice recognition may have reduced the sensitivity of the experiment.</p>
+        <p class="embed-label">Discussion & Takeaways</p>
+        <p>The experiment did not provide evidence that the presence or absence of a mask significantly affected identification accuracy. Participant feedback suggested that some relied heavily on visible features around the eyes, while others reported that masks changed their overall impression of a face.
+        More importantly, this project gave me hands-on experience with the full experimental research process—from literature review and hypothesis development to experimental design, implementation, data collection, and behavioral analysis. It also highlighted how strongly experimental conclusions depend on careful task design and stimulus control. In particular, using voices as identification cues introduced an unintended memory-related factor, demonstrating the importance of isolating the cognitive process of interest.
+        The project also provided practical experience in building behavioral experiments with PsychoPy and motivated further exploration of face recognition using measures such as eye tracking or neuroimaging.</p>
       </div>
 
-      <div class="blog-sub">
-        <h4><span class="step-num">2</span>Reading <em>Sentience</em> &amp; Iconic Memory</h4>
-        <p>Read and discussed <em>Sentience</em> as a group, using thought experiments to explore how the brain, emotion, and decision-making relate to consciousness. This was followed by an independent experiment, <em>Sperling Iconic Memory Paradigm: Experimental Design of Iconic Memory &amp; Spatial Cue</em>, aimed at sharpening experimental-design and programming skills.</p>
+      <div class="blog-sub" id="sentience">
+        <h4><span class="step-num">2</span>The Effect of Spatial Cues on Iconic Memory</h4>
+        <p>Iconic memory is a brief form of visual sensory memory that allows visual information to persist momentarily after a stimulus disappears. Building on <a class="inline-link" href="https://doi.org/10.1037/h0093759" target="_blank" rel="noopener">Sperling’s classic iconic memory paradigm</a>, this project explored how spatial cues influence the retrieval of briefly presented visual information. The project was also designed as a hands-on introduction to experimental programming. After studying visual angle and learning MATLAB and Psychtoolbox, we designed and implemented a pilot behavioral experiment examining the relationship between iconic memory and spatial attention.</p>
+        <p class="embed-label">Experimental Design</p>
+        <div class="img-row">
+          <figure class="img-frame"><img src="../assets/projects/2023-2024BCSC/project2.png" alt="Interface overview" loading="lazy" class="lightbox-img"></figure>
+          </figure>
+        </div>
+        <p>Four participants completed a visual memory task consisting of a 500-ms memory display, a 1,000-ms blank interval, and a response display.
+        During the memory display, six randomly selected letters were presented in a 2 × 3 grid. In the response phase, participants judged whether a target letter had appeared in the preceding display.
+        The experiment manipulated three spatial-cue conditions:</p>
+        <ul>
+          <li>Valid Cue — the cue correctly indicated the target location</li>
+          <li>Invalid Cue — the cue indicated a different location</li>
+          <li>No Cue — no spatial information was provided</li>
+        </ul>
+        <p>Target presence was also manipulated, resulting in six experimental conditions. Each participant completed 540 trials in total.
+        The experiment was implemented using MATLAB R2022a and Psychtoolbox-3.</p>
+        <p class="embed-label">Results</p>
+        <p>Given the small sample size (<em>n</em>= 4), the study was treated as a pilot experiment and analyzed descriptively rather than through inferential statistics.
+        Overall, accuracy was lower for present targets (63.70%) than for absent targets (92.36%). Response times also varied depending on cue availability and target presence. Among present-target trials, the invalid-cue condition showed slightly higher accuracy, although the differences across cue conditions were small.
+        These patterns should not be interpreted as evidence for a reliable spatial-cue effect because of the limited sample size and several constraints in the experimental design.</p>
+        <p class="embed-label">Discussion & Takeaways</p>
+        <p>This pilot study revealed several design issues that would need to be addressed in a larger follow-up experiment. In particular, visual similarity among letter stimuli should be better controlled, and the task should more carefully balance the decision processes required for present and absent targets. The identical structure of some absent-target trials across spatial-cue conditions also introduced unnecessary repetition.
+        More importantly, the project provided hands-on experience in translating a classic cognitive paradigm into a programmable behavioral experiment, from defining experimental conditions and controlling stimulus presentation to collecting and interpreting behavioral data.
+        It also gave me practical experience with MATLAB and Psychtoolbox and demonstrated how pilot data can be used not only to test a hypothesis, but also to identify weaknesses in an experimental design and guide its refinement.</p>
       </div>
 
-      <div class="blog-sub">
+      <div class="blog-sub" id = "hackathon">
         <h4><span class="step-num">3</span>Idea Hackathon: Tom &amp; Jerry</h4>
         <p>As club president, organized the community's "Brain &amp; Cognitive Science Idea Hackathon." Presented a project inspired by the Pied Piper, exploring a cognitive-science approach to guiding rats toward a single location &mdash; awarded 2nd place.</p>
+        <div class="img-row">
+          <figure class="img-frame"><img src="../assets/projects/2023-2024BCSC/project3.png" alt="Interface overview" loading="lazy" class="lightbox-img"></figure>
+          </figure>
+        </div>  
+        <p>Inspired by the Max Planck Institute of Animal Behavior's ICARUS project &mdash; which combines movement-based earth observation with species-distribution modeling &mdash; I designed a protocol for identifying rats' preference and avoidance behaviors, in order to design an aversive stimulus ("Tom") and an attractive stimulus ("Jerry"). Stimuli were placed by drawing on how rats communicate, using ultrasonic vocalizations (USVs) and chemical (odorant) signals, with approach-attempt counts used to gauge preference and learning.</p>
+        <p><strong>Tom (deterrent):</strong> 22kHz-range USVs (typically emitted under anxiety or fear &mdash; e.g., predator scent, social defeat), chemical signals (predator odor, e.g., cat urine), physical deterrence (forced relocation of congregated rats), forward-facing cameras (to estimate mortality/congestion by chemical concentration and train a model for the optimal concentration), and GPS (real-time location relayed to a central control point) &mdash; with deterrents placed along escape routes predicted from sewage-line maps.</p>
+        <p><strong>Jerry (attractant):</strong> 55kHz-range USVs and chemical (odorant) signals.</p>
+        <p class="embed-label">References</p>
+        <p>김성현, 최준기, 김재석, 장아름, 이재호, 차경진, & 이상원. (2018). 빅데이터와 딥러닝을 활용한 동물 감염병 확산 차단. 지능정보연구, 24(4), 137-154. <a class ="in-line-link" href="http://dx.doi.org/10.13088/jiis.2018.24.4.137" target = "blank" rel="noopener">http://dx.doi.org/10.13088/jiis.2018.24.4.137</a></p>
+        <p>최준식. (2022). 심리학 및 행동생물학적 연구에서 동물 로봇의 활용과 전망. 로봇학회 논문지, 17(1), 86-92. <a class ="in-line-link" href="https://doi.org/10.7746/jkros.2022.17.1.086" target = "blank" rel="noopener">https://doi.org/10.7746/jkros.2022.17.1.086</a></p>
+        <p>Turner, L. W., et al. "Monitoring cattle behavior and pasture use with GPS and GIS." Canadian Journal of Animal Science 80.3 (2000): 405-413. <a class ="in-line-link" href="https://doi.org/10.4141/A99-093" target = "blank" rel="noopener">https://doi.org/10.4141/A99-093</a></p>
+        <p>Amir, Alon, et al. "Amygdala signaling during foraging in a hazardous environment." Journal of Neuroscience 35.38 (2015): 12994-13005. <a class ="in-line-link" href="https://doi.org/10.1523/JNEUROSCI.0407-15.2015" target = "blank" rel="noopener">https://doi.org/10.1523/JNEUROSCI.0407-15.2015</a></p>
 
-        <details class="tech-detail-toggle">
-          <summary>Read the technical approach</summary>
-          <p>Inspired by the Max Planck Institute of Animal Behavior's ICARUS project &mdash; which combines movement-based earth observation with species-distribution modeling &mdash; I designed a protocol for identifying rats' preference and avoidance behaviors, in order to design an aversive stimulus ("Tom") and an attractive stimulus ("Jerry"). Stimuli were placed by drawing on how rats communicate, using ultrasonic vocalizations (USVs) and chemical (odorant) signals, with approach-attempt counts used to gauge preference and learning.</p>
-          <p><strong>Tom (deterrent):</strong> 22kHz-range USVs (typically emitted under anxiety or fear &mdash; e.g., predator scent, social defeat), chemical signals (predator odor, e.g., cat urine), physical deterrence (forced relocation of congregated rats), forward-facing cameras (to estimate mortality/congestion by chemical concentration and train a model for the optimal concentration), and GPS (real-time location relayed to a central control point) &mdash; with deterrents placed along escape routes predicted from sewage-line maps.</p>
-          <p><strong>Jerry (attractant):</strong> 55kHz-range USVs and chemical (odorant) signals.</p>
-        </details>
       </div>
 
     </div>
@@ -81,7 +132,7 @@
     <footer aria-label="Footer" style="margin-top: 20px; padding-top: 24px; border-top: 1px solid rgba(44,26,14,0.08); color: #6b4c3b; font-size: 13px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
       <div>&copy; <span id="year"></span> Daun Jung</div>
       <div style="display:flex; gap:10px;">
-        <a href="cv.pdf" target="_blank" rel="noopener" style="color:#6b4c3b;">CV</a>
+        <a href="../cv.pdf" target="_blank" rel="noopener" style="color:#6b4c3b;">CV</a>
         <span>&middot;</span>
         <a href="https://osf.io/fxwbj/" target="_blank" rel="noopener" style="color:#6b4c3b;">OSF</a>
       </div>
@@ -89,6 +140,6 @@
 
   </main>
 
-  <script src="./script.js" defer></script>
+  <script src="../script.js" defer></script>
 </body>
 </html>
