@@ -13,20 +13,24 @@
   if (y) y.textContent = new Date().getFullYear();
 })();
 
-// Active nav (safe + supports inProgress)
+// Active nav (safe + supports inProgress + supports body[data-page] override)
 (function setActiveNav(){
+  const bodyPage = (document.body.dataset.page || "").toLowerCase();
+
   const file = (location.pathname.split("/").pop() || "index.html").toLowerCase();
 
   const map = {
     "": "index",
     "index.html": "index",
     "publications.html": "publications",
-    "presentations.html": "presentations", 
+    "presentations.html": "presentations",
     "projects.html": "projects",
-    "sketches.html": "sketches"
+    "sketches.html": "sketches",
+    "inprogress.html": "inprogress",
+    "inprogress.htm": "inprogress",
   };
 
-  const key = map[file] || "index";
+  const key = bodyPage || map[file] || "index";
   const a = document.querySelector(`.menu a[data-nav="${key}"]`);
   if (a) a.classList.add("active");
 })();
@@ -435,6 +439,17 @@ function runDecisionDemo(canvas){
       p.classList.toggle("active", on);
       p.setAttribute("aria-hidden", on ? "false" : "true");
     });
+
+    // Replay the speech-bubble reveal animation for the panel that just opened
+    const activePanel = document.getElementById(targetId);
+    if(activePanel){
+      const bubbles = activePanel.querySelectorAll(".impression-bubble");
+      bubbles.forEach(b => {
+        b.classList.remove("show");
+        void b.offsetWidth; // force reflow so the animation can restart
+        b.classList.add("show");
+      });
+    }
   }
 
   cards.forEach(btn => btn.addEventListener("click", () => activate(btn.dataset.target)));
@@ -580,5 +595,101 @@ function runDecisionDemo(canvas){
     // Init
     render();
     startAutoplay();
+  });
+})();
+
+// Projects: filter chips (multi-select OR logic over data-tags)
+(function initProjectFilters(){
+  const chipWrap = document.querySelector("[data-filter-chips]");
+  const cards = document.querySelectorAll(".project-cards .proj-card");
+  if(!chipWrap || !cards.length) return;
+
+  const chips = Array.from(chipWrap.querySelectorAll(".chip-filter"));
+  const allChip = chipWrap.querySelector('[data-filter="all"]');
+  let active = new Set();
+
+  function applyFilter(){
+    if(active.size === 0){
+      cards.forEach(c => c.style.display = "");
+      return;
+    }
+    cards.forEach(c => {
+      const tags = (c.dataset.tags || "").split(/\s+/);
+      const match = tags.some(t => active.has(t));
+      c.style.display = match ? "" : "none";
+    });
+  }
+
+  chips.forEach(chip => {
+    chip.addEventListener("click", () => {
+      const val = chip.dataset.filter;
+
+      if(val === "all"){
+        active.clear();
+        chips.forEach(c => c.classList.toggle("active", c === allChip));
+        applyFilter();
+        return;
+      }
+
+      chip.classList.toggle("active");
+      if(chip.classList.contains("active")) active.add(val);
+      else active.delete(val);
+
+      if(active.size === 0){
+        chips.forEach(c => c.classList.toggle("active", c === allChip));
+      } else if(allChip){
+        allChip.classList.remove("active");
+      }
+
+      applyFilter();
+    });
+  });
+})();
+
+// Standalone project pages: reveal speech-bubble ("소감") on scroll into view
+(function initImpressionReveal(){
+  const bubbles = document.querySelectorAll(".impression-bubble");
+  if(!bubbles.length) return;
+
+  if(!("IntersectionObserver" in window)){
+    bubbles.forEach(b => b.classList.add("show"));
+    return;
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add("show");
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.35 });
+
+  bubbles.forEach(b => io.observe(b));
+})();
+
+// Click-to-zoom lightbox for images with class "lightbox-img"
+(function initLightbox(){
+  const overlay = document.createElement("div");
+  overlay.className = "lightbox-overlay";
+  const img = document.createElement("img");
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
+
+  function open(src, alt){
+    img.src = src;
+    img.alt = alt || "";
+    overlay.classList.add("active");
+  }
+  function close(){
+    overlay.classList.remove("active");
+    img.src = "";
+  }
+
+  overlay.addEventListener("click", close);
+  document.addEventListener("keydown", (e) => { if(e.key === "Escape") close(); });
+
+  document.querySelectorAll(".lightbox-img").forEach(el => {
+    el.addEventListener("click", () => open(el.src, el.alt));
   });
 })();
