@@ -22,8 +22,8 @@
     "index.html": "index",
     "publications.html": "publications",
     "presentations.html": "presentations", 
-    "inprogress.html": "inprogress",
-    "inprogress.htm": "inprogress",
+    "projects.html": "projects",
+    "sketches.html": "sketches"
   };
 
   const key = map[file] || "index";

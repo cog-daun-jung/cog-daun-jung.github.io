@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sketches — Daun Jung</title>
+  <meta name="description" content="Daun's drawings of the brain and eye, and glimpses of life outside the lab." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,300;0,8..144,400;0,8..144,600;0,8..144,700;1,8..144,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    body { font-family: 'Roboto Serif', Georgia, serif; color: #2c1a0e; }
+    h1, h2, h3, h4, h5 { color: #2c1a0e; }
+    :root { --text: #2c1a0e; --muted: #6b4c3b; }
+
+    .mark { display: none; }
+    .brand { display: none; }
+    .nav { justify-content: center; }
+    nav ul { justify-content: center; }
+    .menu a { color: #6b4c3b; }
+    .menu a:hover { color: #2c1a0e; background: rgba(44,26,14,0.06); }
+    .menu a.active { color: #2c1a0e; background: rgba(44,26,14,0.07); border-color: rgba(44,26,14,0.18); }
+
+    /* ── Intro text (centered, no title) ── */
+    .intro-line {
+      text-align: center;
+      padding: 30px 10px 22px;
+    }
+    .intro-line p {
+      margin: 0 auto;
+      font-size: 15.5px;
+      color: #6b4c3b;
+      line-height: 1.6;
+      max-width: 56ch;
+    }
+
+    /* ── Sketches row (reuses .grid3 from style.css) ── */
+    .sketch-frame {
+      aspect-ratio: 4 / 5;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(44,26,14,0.12);
+      box-shadow: 0 6px 18px rgba(44,26,14,0.08);
+      background: #e8ddd4;
+    }
+    .sketch-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ── Off-the-lab text row: full-width, single line ── */
+    .offlab {
+      text-align: center;
+      padding: 40px 10px 34px;
+    }
+    .offlab p {
+      margin: 0;
+      color: #2c1a0e;
+      font-size: clamp(13.5px, 2.4vw, 16.5px);
+      line-height: 1.6;
+      white-space: nowrap;
+      overflow-x: auto;
+    }
+
+    /* ── Instagram feed: each photo its own full-width, wide row ── */
+    .insta-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .insta-frame {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(44,26,14,0.12);
+      box-shadow: 0 4px 14px rgba(44,26,14,0.06);
+      background: #e8ddd4;
+      transition: opacity 160ms ease;
+    }
+    .insta-frame:hover { opacity: 0.88; }
+    .insta-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .insta-handle {
+      text-align: center;
+      margin-top: 16px;
+    }
+    .insta-handle a {
+      font-size: 13.5px;
+      color: #6b4c3b;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(44,26,14,0.22);
+      padding-bottom: 1px;
+      transition: color 140ms ease, border-color 140ms ease;
+    }
+    .insta-handle a:hover { color: #e85d1a; border-color: #e85d1a; }
+    .intro-caption {
+        margin-top: 6px !important;
+        font-size: 12.5px !important;
+        color: #8b7a6e !important;
+        font-style: italic;
+        }
+
+    @media (max-width: 600px) {
+      .insta-frame { aspect-ratio: 16 / 9; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="nav">
+      <a class="brand" href="#top" aria-label="Go to top"><span class="mark"></span></a>
+      <nav aria-label="Primary">
+        <ul class="menu">
+          <li><a href="index.html" data-nav="index">About</a></li>
+          <li><a href="publications.html" data-nav="publications">Publications</a></li>
+          <li><a href="presentations.html" data-nav="presentations">Presentations</a></li>
+          <li><a href="projects.html" data-nav="projects">Projects</a></li>
+          <li><a href="sketches.html" data-nav="sketches">Sketches</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="wrap">
+
+    <!-- Intro line, centered, no title -->
+    <div class="offlab">
+      <p>A few drawings from my sketchbook, alongside pieces of life outside the lab.</p>
+      <p class="intro-caption">Having something to be absorbed in is a kind of luck!</p>
+    </div>
+
+    <!-- Top row: 3 sketches -->
+    <section class="grid3">
+      <div class="card sketch-frame">
+        <img src="assets/sketches/1.jpg" alt="Brain sketch"
+             onerror="this.parentElement.style.background='linear-gradient(135deg,rgba(232,93,26,0.15),rgba(255,206,138,0.25),rgba(26,79,168,0.10))'; this.style.display='none';">
+      </div>
+      <div class="card sketch-frame">
+        <img src="assets/sketches/2.jpg" alt="Eye sketch"
+             onerror="this.parentElement.style.background='linear-gradient(135deg,rgba(232,93,26,0.15),rgba(255,206,138,0.25),rgba(26,79,168,0.10))'; this.style.display='none';">
+      </div>
+      <div class="card sketch-frame">
+        <img src="assets/sketches/3.jpg" alt="Brain sketch"
+             onerror="this.parentElement.style.background='linear-gradient(135deg,rgba(232,93,26,0.15),rgba(255,206,138,0.25),rgba(26,79,168,0.10))'; this.style.display='none';">
+      </div>
+    </section>
+
+    <!-- Off-the-lab text -->
+    <section class="offlab">
+      <p>I also keep a record of life outside the lab, and share pieces of it along the way.</p>
+    </section>
+
+    <!-- Instagram feed: each photo its own row -->
+    <section>
+      <div class="insta-feed">
+        <a class="insta-frame" href="https://www.instagram.com/posi.ac.tive" target="_blank" rel="noopener noreferrer">
+          <img src="assets/sketches/feed1.png" alt="Instagram post"
+               onerror="this.parentElement.style.background='linear-gradient(135deg,rgba(232,93,26,0.12),rgba(26,79,168,0.10))'; this.style.display='none';">
+        </a>
+        <a class="insta-frame" href="https://www.instagram.com/posi.ac.tive" target="_blank" rel="noopener noreferrer">
+          <img src="assets/sketches/feed2.png" alt="Instagram post"
+               onerror="this.parentElement.style.background='linear-gradient(135deg,rgba(232,93,26,0.12),rgba(26,79,168,0.10))'; this.style.display='none';">
+        </a>
+      </div>
+      <div class="insta-handle">
+        <a href="https://www.instagram.com/posi.ac.tive" target="_blank" rel="noopener noreferrer">@posi.ac.tive</a>
+      </div>
+    </section>
+
+    <footer aria-label="Footer" style="margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(44,26,14,0.08); color: #6b4c3b; font-size: 13px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+      <div>© <span id="year"></span> Daun Jung</div>
+      <div style="display:flex; gap:10px;">
+        <a href="cv.pdf" target="_blank" rel="noopener" style="color:#6b4c3b;">CV</a>
+        <span>·</span>
+        <a href="https://osf.io/fxwbj/" target="_blank" rel="noopener" style="color:#6b4c3b;">OSF</a>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="./script.js" defer></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
